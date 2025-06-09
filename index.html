@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Calculadora de Preço Teto - Décio Bazin</title>
+
+  <!-- Fonte personalizada -->
+  <style>
+    @font-face {
+      font-family: 'GroutpixFlowSerif';
+      src: url('Scary Castle.otf') format('truetype');
+    }
+
+    body {
+      font-family: 'GroutpixFlowSerif', serif;
+      background: url('https://images.pexels.com/photos/210607/pexels-photo-210607.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1') no-repeat center center fixed;
+      background-size: cover;
+      padding: 40px;
+      font-size: 40px;
+      color: #000000;
+    }
+
+    h1 {
+      text-align: center;
+    }
+
+    .container {
+      max-width: 500px;
+      margin: auto;
+      background: #f7f7f7;
+      padding: 50px;
+      border-radius: 100px;
+      box-shadow: 0 0 100px rgba(0,0,0,0.1);
+    }
+
+    input[type="number"] {
+      width: 100%;
+      padding: 10px;
+      margin: 8px 0;
+      font-size: 16px;
+    }
+
+    button {
+      background-color: #007bff;
+      color: white;
+      border: none;
+      padding: 12px;
+      width: 100%;
+      font-size: 50px;
+      cursor: pointer;
+      margin-top: 15px;
+    }
+
+    button:hover {
+      background-color: #0056b3;
+    }
+
+    .resultado {
+      margin-top: 20px;
+      font-size: 35px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Preço Teto - Décio Bazin</h1>
+    <form id="formulario">
+      <label>Dividendos dos últimos 5 anos:</label><br />
+      <input type="number" step="0.01" placeholder="Ano 1" required id="ano1" />
+      <input type="number" step="0.01" placeholder="Ano 2" required id="ano2" />
+      <input type="number" step="0.01" placeholder="Ano 3" required id="ano3" />
+      <input type="number" step="0.01" placeholder="Ano 4" required id="ano4" />
+      <input type="number" step="0.01" placeholder="Ano 5" required id="ano5" />
+
+      <label>Taxa de retorno desejada (%):</label>
+      <input type="number" step="0.1" min="1" max="20" required id="retorno" />
+
+      <button type="submit">Calcular Preço Teto</button>
+    </form>
+
+    <div class="resultado" id="resultado"></div>
+  </div>
+
+  <script>
+    document.getElementById('formulario').addEventListener('submit', function(event) {
+      event.preventDefault();
+
+      const anos = [
+        parseFloat(document.getElementById('ano1').value),
+        parseFloat(document.getElementById('ano2').value),
+        parseFloat(document.getElementById('ano3').value),
+        parseFloat(document.getElementById('ano4').value),
+        parseFloat(document.getElementById('ano5').value)
+      ];
+
+      const retornoPercentual = parseFloat(document.getElementById('retorno').value);
+
+      const media = anos.reduce((a, b) => a + b, 0) / 5;
+      const precoTeto = media / (retornoPercentual / 100);
+
+      document.getElementById('resultado').innerHTML = `
+        📊 Média de dividendos: R$ ${media.toFixed(2)}<br>
+        🎯 Preço teto com retorno de ${retornoPercentual}%: R$ ${precoTeto.toFixed(2)}
+      `;
+    });
+  </script>
+</body>
+</html>
